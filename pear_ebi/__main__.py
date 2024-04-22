@@ -1,5 +1,9 @@
 import os
 import sys
+import warnings
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 
 def main():
@@ -233,6 +237,17 @@ def main():
             # with the value given in terminal
             # ─── Compute Distances ────────────────────────────────────────
             method = config["method"] if args.method is None else args.method
+            if method not in (
+                "hashrf_RF",
+                "hashrf_wRF",
+                "smart_RF",
+                "tqdist_quartet",
+                "tqdist_triplet",
+                None,
+            ):
+                sys.exit(
+                    "Invalid method - choose among: hashrf_RF, hashrf_wRF, smart_RF, tqdist_quartet, tqdist_triplet"
+                )
             if method is not None:
                 SET.calculate_distances(method)
 
@@ -382,14 +397,14 @@ def main():
                     )
 
                     if dimensions > 2:
-                        name_plot = (
-                            name_plot + "3D"
+                        name_plot3d = (
+                            name_plot3d + "3D"
                             if name_plot is not None
                             else f"{method_embedding.upper()}_3D"
                         )
                         fig = SET.plot_3D(
                             method_embedding,
-                            name_plot=name_plot,
+                            name_plot=name_plot3d,
                             plot_meta=plot_meta,
                             plot_set=plot_set,
                             select=select,
@@ -400,14 +415,14 @@ def main():
                         if show:
                             fig.show()
 
-                    name_plot = (
+                    name_plot2d = (
                         name_plot + "2D"
                         if name_plot is not None
                         else f"{method_embedding.upper()}_2D"
                     )
                     fig = SET.plot_2D(
                         method_embedding,
-                        name_plot=name_plot,
+                        name_plot=name_plot2d,
                         plot_meta=plot_meta,
                         plot_set=plot_set,
                         select=select,
@@ -420,21 +435,28 @@ def main():
 
                 else:
                     if dimensions > 2:
-                        name_plot = f"{method_embedding.upper()}_3D"
+                        name_plot3d = (
+                            name_plot + "3D"
+                            if name_plot is not None
+                            else f"{method_embedding.upper()}_3D"
+                        )
                         fig = SET.plot_3D(
                             method_embedding,
-                            name_plot=name_plot,
+                            name_plot=name_plot3d,
                             save=True,
                         )
 
                         if args.plot:
                             fig.show()
 
-                        fig.show()
-                    name_plot = f"{method_embedding.upper()}_2D"
+                    name_plot2d = (
+                        name_plot + "2D"
+                        if name_plot is not None
+                        else f"{method_embedding.upper()}_2D"
+                    )
                     fig = SET.plot_2D(
                         method_embedding,
-                        name_plot=name_plot,
+                        name_plot=name_plot2d,
                         save=True,
                     )
 
@@ -449,6 +471,7 @@ def main():
 
     except KeyboardInterrupt:
         print("[orange1]\n- Leaving PEAR -")
+        return
 
     print("[orange1]\n- Leaving PEAR -")
 
