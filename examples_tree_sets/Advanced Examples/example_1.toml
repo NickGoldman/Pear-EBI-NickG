@@ -1,0 +1,25 @@
+[trees]
+file1 = "../beast_trees/beast_run1.trees"
+file2 = "../beast_trees/beast_long.trees"
+
+[dir]
+dir1 = "../beast_trees/"
+pattern = '*run2*'
+
+[distance]
+# available methods are: hashrf_RF, hashrf_wRF, smart_RF, tqdist_quartet, tqdist_triplet
+method = "hashrf_RF"
+
+[embedding]
+method = "pca" # embedding method between: pca, tsne, isomap, lle
+dimensions = 3
+
+[highlight]
+trace1 = [0, 1000]
+beast_run2 = [100, 200, 500]
+
+[plot]
+plot_meta = "STEP"
+select = true
+same_scale = false
+show = true
