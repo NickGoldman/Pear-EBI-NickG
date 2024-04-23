@@ -375,7 +375,7 @@ def main():
                     name_plot = config["plot"]["name"]
                     plot_meta = (
                         config["plot"]["plot_meta"]
-                        if config["plot"]["meta"] is not None
+                        if config["plot"]["plot_meta"] is not None
                         else "SET-ID"
                     )
                     plot_set = config["plot"]["plot_set"]
@@ -389,12 +389,12 @@ def main():
                         if config["plot"]["same_scale"] is not None
                         else False
                     )
-
                     show = (
                         config["plot"]["show"]
                         if config["plot"]["show"] is not None
                         else False
                     )
+                    z_axis = config["plot"]["z_axis"]
 
                     if dimensions > 2:
                         name_plot3d = (
@@ -408,6 +408,7 @@ def main():
                             plot_meta=plot_meta,
                             plot_set=plot_set,
                             select=select,
+                            z_axis=z_axis,
                             same_scale=same_scale,
                             save=True,
                         )
@@ -434,6 +435,9 @@ def main():
                         fig.show()
 
                 else:
+                    if "name_plot" not in globals() and "name_plot" not in locals():
+                        name_plot = None
+
                     if dimensions > 2:
                         name_plot3d = (
                             name_plot + "3D"

@@ -51,6 +51,8 @@ def plot_embedding(
     assert (
         dimensions <= 3 and dimensions > 1
     ), "Please select either 2 or 3 dimensions for the plot"
+    if z_axis is not None:
+        assert z_axis in metadata.columns, f"Could not find {z_axis} in metadata"
     assert plot_meta in metadata.columns, f"Could not find {plot_meta} in metadata"
     assert (
         "SET-ID" in metadata.columns
@@ -656,8 +658,8 @@ def plot_embedding(
         no_widget_fig = fig
 
         if z_axis is not None:
-            assert z_axis in metadata.columns, f"{z_axis} not in metadata"
             fig.layout.scene.zaxis.title = z_axis
+            fig.layout.scene.zaxis.title.font["size"] = 20
             SETS = np.unique(metadata["SET-ID"])
             for i in range(len(SETS)):  # number of different traces in plot
                 idx_meta = metadata["SET-ID"] == SETS[i]
@@ -667,7 +669,8 @@ def plot_embedding(
                     + "Step: %{customdata}<br>"
                     + "PCo1: %{x}<br>"
                     + "PCo2: %{y}<br>"
-                    + "%{z_axis}: %{metadata[z_axis][idx_meta]}<br>"
+                    + f"{z_axis}:"
+                    + "%{z}<br>"
                 )
 
         # "non-static" plot
