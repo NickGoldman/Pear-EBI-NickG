@@ -1,0 +1,25 @@
+[trees]
+file1 = "../MAPLE_res/IQtreeStartingTree_Trees"
+file2 = "../MAPLE_res/MapleStartingTree_Trees"
+file3 = "../MAPLE_res/ParsimonyRAxMLStartingTree_GTRmodel_Trees"
+file4 = "../MAPLE_res/RAxMLNGStartingTree_Trees"
+file5 = "../MAPLE_res/UshERStartingTree_Trees"
+file6 = "../MAPLE_res/TrueTreeSimulations"
+
+[collection]
+distance_matrix = "DistMat_Maple.csv"
+metadata = "Likelihoods.csv"
+
+[embedding]
+method = "pca"
+dimensions = 3
+
+[plot]
+plot_meta = "LK"
+z_axis = "LK"
+select = false
+same_scale = true
+show = true
+
+[highlight]
+trace6=[0]

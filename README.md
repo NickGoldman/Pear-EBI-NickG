@@ -1,5 +1,5 @@
 
- <h1> <font color='green'>P</font>hylogeny <font color='green'>E</font>mbedding  & <br>  <font color='green'>A</font>pproximate <font color='green'>R</font>epresentation </h1>
+ <h1> Phylogeny Embedding  & <br>  Approximate Representation </h1>
  <img src="https://github.com/AndreaRubbi/Pear-EBI/raw/pear_ebi/logos/LOGO_PEAR.png" width="100" height="100" style='position:absolute; left:400px; top:-15px' >
 
  <img src="https://img.shields.io/github/license/AndreaRubbi/Pear-EBI?color=red&label=License&style=plastic"> <img src="https://img.shields.io/pypi/v/pear_ebi?color=purple&label=version&style=plastic"> <img src="https://img.shields.io/pypi/implementation/pear_ebi?style=plastic"> <img src="https://img.shields.io/pypi/pyversions/pear_ebi?color=green&style=plastic">
@@ -27,7 +27,7 @@ PEAR as a program
 Run `pear_ebi --help` to see the complete list of arguments and flags.
 ### Simple usage
 
-`pear_ebi examples_trees_sets/beast_trees/beast_run1.trees -m hashrf_RF`
+`pear_ebi examples_tree_sets/beast_trees/beast_run1.trees -m hashrf_RF`
 
 this script calculates the unweighted <a href='https://doi.org/10.1016/0025-5564(81)90043-2'>Robison Foulds</a> distances between the trees in the file "beast_run1.trees", which contains 1001 phylogenetic trees.
 
@@ -35,11 +35,11 @@ the flag *-m* indicates the method used to compute the dissimilarity between phy
 
 To embed these distances in a lower-dimensional space, we can use PCoA (MDS) or tSNE:
 
-`pear_ebi examples_trees_sets/beast_trees/beast_run1.trees -m hashrf_RF -pca 2`
+`pear_ebi examples_tree_sets/beast_trees/beast_run1.trees -m hashrf_RF --pca 2`
 
 we therefore embedded the distance matrix in 2 dimensions. Using the flag *-quality* one can assess the correlation between the distances in the N-dimensional space and in the embedding.
 
-`pear_ebi examples_trees_sets/beast_trees/beast_run1.trees -m hashrf_RF -pca 2 -plot`
+`pear_ebi examples_tree_sets/beast_trees/beast_run1.trees -m hashrf_RF --pca 2 --plot`
 
 The flag *-plot* indicates that PEAR has to plot the embeddings and show them, respectively. If an embedding method is specified the plots are produced anyway. Plotting doesn't require any indication on the number of dimensions as the embeddings are represented in 2 dimensions if the distances are embedded in 2 dimensions, while it plots on 2 and 3 dimensions in any other case.
 
@@ -57,9 +57,12 @@ A standard config toml file can be used for specific emebddings of multiple sets
 Using the config file allows one to use all the features of PEAR, including additional embedding methods and plot designs. The config file can also be used to specify lists of indexes of interesting trees in the sets, in order to highlight them in the final plots.
 
 ### Interactive mode
-`pear_ebi --i` :
+`pear_ebi -i` :
 this script launches the program in the interactive mode. Once the program starts, it is going to guide you through its usage thanks to an intuitive interface.
 
+## Turorials and Examples
+
+Follow <a href='https://github.com/AndreaRubbi/Pear-EBI/tree/pear_ebi/examples_tree_sets'>this link</a> for a complete set of basic and avanced guides and tutorials to use PEAR on the command line and as a python library.
 
  <!--- ### Additional Dependencies
  In order to get the complete report on the quality of embeddings, it may be necessary to

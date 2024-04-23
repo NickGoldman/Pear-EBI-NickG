@@ -32,7 +32,7 @@ def tsne(distance_matrix, n_dimensions, metadata=None, quality=False, report=Fal
         perplexity=3,
     )
 
-    Distances_embedded_ND = tsne.fit_transform(distance_matrix.values.astype(np.float32))
+    Distances_embedded_ND = tsne.fit_transform(distance_matrix.astype(np.float32))
     pd.DataFrame(Distances_embedded_ND).to_csv(
         "./t-SNE_Embedding.csv", header=False, index=False
     )

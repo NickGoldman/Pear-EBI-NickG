@@ -51,6 +51,8 @@ def plot_embedding(
     assert (
         dimensions <= 3 and dimensions > 1
     ), "Please select either 2 or 3 dimensions for the plot"
+    if z_axis is not None:
+        assert z_axis in metadata.columns, f"Could not find {z_axis} in metadata"
     assert plot_meta in metadata.columns, f"Could not find {plot_meta} in metadata"
     assert (
         "SET-ID" in metadata.columns
@@ -431,9 +433,9 @@ def plot_embedding(
                     customdata=metadata["STEP"],
                     hovertemplate="<b>Trace: %{text}</b><br>"
                     + "Step: %{customdata}<br>"
-                    + "x: %{x}<br>"
-                    + "y: %{y}<br>"
-                    + "z: %{z}<br>",
+                    + "PCo1: %{x}<br>"
+                    + "PCo2: %{y}<br>"
+                    + "PCo3: %{z}<br>",
                     marker_symbol=shapes[idx],
                     marker_color=metadata_colors[f"{plot_meta}_color_plot"][i],
                     text=metadata["SET-ID"].values[idx],
@@ -452,6 +454,45 @@ def plot_embedding(
                 )
             )
 
+        ax_style_x = dict(
+            showbackground=False,
+            backgroundcolor="rgb(240, 240, 240)",
+            showgrid=True,
+            showline=True,
+            linecolor="black",
+            linewidth=2,
+            showticklabels=True,
+            zeroline=True,
+            title="PCo1",
+            title_font=dict(size=20),
+        )
+
+        ax_style_y = dict(
+            showbackground=False,
+            backgroundcolor="rgb(240, 240, 240)",
+            showgrid=True,
+            showline=True,
+            linecolor="black",
+            linewidth=2,
+            showticklabels=True,
+            zeroline=True,
+            title="PCo2",
+            title_font=dict(size=20),
+        )
+
+        ax_style_z = dict(
+            showbackground=False,
+            backgroundcolor="rgb(240, 240, 240)",
+            showgrid=True,
+            showline=True,
+            linecolor="black",
+            linewidth=2,
+            showticklabels=True,
+            zeroline=True,
+            title="PCo3",
+            title_font=dict(size=20),
+        )
+
         # defines the layout of the plot
         fig.update_layout(
             width=900,
@@ -461,6 +502,11 @@ def plot_embedding(
             template="seaborn",
             plot_bgcolor="rgba(0,0,0,0)",
             paper_bgcolor="rgba(0,0,0,0)",
+            scene=dict(
+                xaxis=ax_style_x,
+                yaxis=ax_style_y,
+                zaxis=ax_style_z,
+            )
             # hovermode="x unified",
         )
 
@@ -611,6 +657,22 @@ def plot_embedding(
         # "static" plot
         no_widget_fig = fig
 
+        if z_axis is not None:
+            fig.layout.scene.zaxis.title = z_axis
+            fig.layout.scene.zaxis.title.font["size"] = 20
+            SETS = np.unique(metadata["SET-ID"])
+            for i in range(len(SETS)):  # number of different traces in plot
+                idx_meta = metadata["SET-ID"] == SETS[i]
+                fig.data[i].z = metadata[z_axis][idx_meta]
+                fig.data[i].hovertemplate = (
+                    "<b>Trace: %{text}</b><br>"
+                    + "Step: %{customdata}<br>"
+                    + "PCo1: %{x}<br>"
+                    + "PCo2: %{y}<br>"
+                    + f"{z_axis}:"
+                    + "%{z}<br>"
+                )
+
         # "non-static" plot
         fig = go.FigureWidget(fig)
 
@@ -678,8 +740,8 @@ def plot_embedding(
                     customdata=metadata["STEP"],
                     hovertemplate="<b>Trace: %{text}</b><br>"
                     + "Step: %{customdata}<br>"
-                    + "x: %{x}<br>"
-                    + "y: %{y}<br>",
+                    + "PCo1: %{x}<br>"
+                    + "PCo2: %{y}<br>",
                     marker_symbol=shapes[idx],
                     marker_color=metadata_colors[f"{plot_meta}_color_plot"][i],
                     text=metadata["SET-ID"].values[idx],
@@ -730,27 +792,46 @@ def plot_embedding(
             xaxis=dict(
                 showgrid=True,
                 showline=True,
+                linecolor="black",
+                linewidth=2,
                 zeroline=True,
                 showticklabels=True,
-                domain=[0, 0.85],
+                domain=[0, 0.84],
+                title="PCo1",
+                title_font=dict(size=20)
                 # range = [min_x - abs(0.1 * min_x), max_x + abs(0.1 * max_x)]
             ),
             yaxis=dict(
                 showgrid=True,
                 showline=True,
                 zeroline=True,
+                linecolor="black",
+                linewidth=2,
                 showticklabels=True,
-                domain=[0, 0.85],
+                domain=[0, 0.84],
+                title="PCo2",
+                title_font=dict(size=20)
                 # range = [min_y - abs(0.1 * min_y), max_y + abs(0.1 * max_y)]
             ),
-            plot_bgcolor="rgb(240,240,240)",
+            # plot_bgcolor="rgb(240,240,240)",
             xaxis2=dict(
-                zeroline=True, showticklabels=True, domain=[0.85, 1], showgrid=True
+                zeroline=True,
+                linecolor="black",
+                linewidth=2,
+                showticklabels=True,
+                domain=[0.85, 1],
+                showgrid=True,
             ),
             yaxis2=dict(
-                zeroline=True, showticklabels=True, domain=[0.85, 1], showgrid=True
+                zeroline=True,
+                linecolor="black",
+                linewidth=2,
+                showticklabels=True,
+                domain=[0.85, 1],
+                showgrid=True,
             ),
             paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
             # hovermode="x unified",
         )
 
@@ -1034,14 +1115,6 @@ def plot_embedding(
     #! NB: this can be the only way to obtain a plot in cases where
     #! plotly - ipywidgets - jupyter versions are incompatible
     if static:
-        return no_widget_fig
-
-    if z_axis is not None:
-        assert z_axis in metadata.columns, f"{z_axis} not in metadata"
-        SETS = np.unique(metadata["SET-ID"])
-        for i in range(len(SETS)):  # number of different traces in plot
-            idx_meta = metadata["SET-ID"] == SETS[i]
-            no_widget_fig.data[i].z = metadata[z_axis][idx_meta]
         return no_widget_fig
 
     # check if we are working in an interactive environment

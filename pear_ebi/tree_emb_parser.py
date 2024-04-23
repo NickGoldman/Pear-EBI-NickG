@@ -41,7 +41,8 @@ def parser():
         required=False,
     )
     parser.add_argument(
-        "--i",
+        "--interactive",
+        "-i",
         dest="interactive_mode",
         help="run the program in interactive mode",
         required=False,
@@ -49,8 +50,7 @@ def parser():
     )
     parser.add_argument(
         "-d",
-        "--d",
-        "-dM",
+        "--dM",
         type=str,
         dest="distance_matrix",
         metavar="distance_matrix",
@@ -58,7 +58,7 @@ def parser():
         required=False,
     )
     parser.add_argument(
-        "-meta",
+        "--meta",
         type=str,
         dest="metadata",
         metavar="metadata",
@@ -67,29 +67,29 @@ def parser():
     )
     parser.add_argument(
         "-m",
-        "--m",
+        "--method",
         dest="method",
         type=str,
         help="calculates tree distances using specified method (hashrf_RF, hashrf_wRF, smart_RF, tqdist_quartet, tqdist_triplet)",
         required=False,
     )
     parser.add_argument(
-        "-pca",
+        "--pca",
         dest="pca",
         type=int,
         help="embedding using PCoA: select #principal components",
         required=False,
     )
     parser.add_argument(
-        "-tsne",
+        "--tsne",
         dest="tsne",
         type=int,
         help="embedding using t-SNE: select #final dimensions",
         required=False,
     )
     parser.add_argument(
-        "-plot",
-        "--p",
+        "--plot",
+        "-p",
         dest="plot",
         action="store_true",
         help="plot embedding in 2 or 3 dimensions",
@@ -105,8 +105,8 @@ def parser():
         required=False,
     )"""
     parser.add_argument(
-        "-config",
-        "--c",
+        "--config",
+        "-c",
         dest="config",
         type=str,
         help="toml config file",
@@ -121,22 +121,22 @@ def parser():
         required=False,
     )"""
     parser.add_argument(
-        "-quality",
-        "--q",
+        "--quality",
+        "-q",
         action="store_true",
         dest="quality",
         help="asess quality of embedding",
         required=False,
     )
     parser.add_argument(
-        "-dir",
+        "--dir",
         dest="dir",
         type=str,
         help="directory with files",
         required=False,
     )
     parser.add_argument(
-        "-pattern",
+        "--pattern",
         dest="pattern",
         type=str,
         help="pattern of files in directory",

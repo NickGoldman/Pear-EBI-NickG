@@ -66,7 +66,6 @@ from .subsample import subsample
 # except:
 #    sys.exit("Error")
 
-
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)
 warnings.filterwarnings("ignore", category=SparseEfficiencyWarning)
@@ -643,7 +642,17 @@ class set_collection(tree_set):
 
         self.data = dict()
 
+        metadata_input = None
+        if type(metadata) != type(None):
+            try:
+                metadata_input = pd.read_csv(metadata, index_col=0)
+            except:
+                sys.exit(
+                    "There's an error with the Metadata file - please check the correct location and name of the .csv file"
+                )
+
         self.metadata = pd.DataFrame()
+
         self.n_trees = 0
         for set in self.collection:
             key = os.path.splitext(os.path.basename(set.file))[0]
@@ -659,6 +668,14 @@ class set_collection(tree_set):
             self.n_trees += set.n_trees
 
         self.metadata.reset_index(drop=True, inplace=True)
+
+        if type(metadata) != type(None):
+            try:
+                self.metadata = pd.concat([self.metadata, metadata_input], axis=1)
+            except:
+                sys.exit(
+                    "There's an error with the Metadata file - please check that the .csv file is compatible with the set_collection structure"
+                )
 
         self.sets = np.unique(self.metadata["SET-ID"])
 
