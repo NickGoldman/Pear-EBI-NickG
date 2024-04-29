@@ -44,7 +44,7 @@ def parser():
         "--interactive",
         "-i",
         dest="interactive_mode",
-        help="run the program in interactive mode",
+        help="run the program in interactive mode - only the input file, distance matrix, output file, and metadata arguments will be considered",
         required=False,
         action="store_true",
     )
@@ -54,7 +54,7 @@ def parser():
         type=str,
         dest="distance_matrix",
         metavar="distance_matrix",
-        help="distance matrix : file of the distance matrix",
+        help="distance matrix : specify file containing a precomputed distance matrix",
         required=False,
     )
     parser.add_argument(
@@ -74,17 +74,17 @@ def parser():
         required=False,
     )
     parser.add_argument(
-        "--pca",
-        dest="pca",
+        "--pcoa",
+        dest="pcoa",
         type=int,
-        help="embedding using PCoA: select #principal components",
+        help="embedding using PCoA: select number of components (int) to be calculated",
         required=False,
     )
     parser.add_argument(
         "--tsne",
         dest="tsne",
         type=int,
-        help="embedding using t-SNE: select #final dimensions",
+        help="embedding using t-SNE: select number of components (int) to be calculated",
         required=False,
     )
     parser.add_argument(

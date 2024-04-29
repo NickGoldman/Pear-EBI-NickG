@@ -32,7 +32,7 @@ def main():
 
     import pear_ebi.tree_emb_parser
     from pear_ebi.calculate_distances import hashrf
-    from pear_ebi.embeddings import PCA_e, tSNE_e
+    from pear_ebi.embeddings import PCoA_e, tSNE_e
     from pear_ebi.interactive_mode import interactive
     from pear_ebi.tree_set import set_collection, tree_set
 
@@ -261,7 +261,7 @@ def main():
                 method_embedding = (
                     config["embedding"]["method"]
                     if config["embedding"]["method"] is not None
-                    else "pca"
+                    else "pcoa"
                 )
                 dimensions = (
                     config["embedding"]["dimensions"]
@@ -295,9 +295,9 @@ def main():
             #    report = True
             report = False
 
-            if args.pca is not None:
-                method_embedding = "pca"
-                dimensions = args.pca
+            if args.pcoa is not None:
+                method_embedding = "pcoa"
+                dimensions = args.pcoa
             elif config["embedding"] is None and args.tsne is None:
                 method_embedding = None
                 dimensions = None
@@ -305,7 +305,7 @@ def main():
             if args.tsne is not None:
                 method_embedding = "tsne"
                 dimensions = args.tsne
-            elif config["embedding"] is None and args.pca is None:
+            elif config["embedding"] is None and args.pcoa is None:
                 method_embedding = None
                 dimensions = None
 
