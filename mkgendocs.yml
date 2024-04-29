@@ -13,6 +13,11 @@ pages:
       - fix
       - indent
 
+  - page: "modules/test/test.md"
+    source: "test/test.py"
+    classes:
+      - TestPEAR
+
   - page: "modules/pear_ebi/tree_set.md"
     source: "pear_ebi/tree_set.py"
     classes:
@@ -29,15 +34,15 @@ pages:
     functions:
       - lle
 
+  - page: "modules/pear_ebi/embeddings/PCoA_e.md"
+    source: "pear_ebi/embeddings/PCoA_e.py"
+    functions:
+      - pcoa
+
   - page: "modules/pear_ebi/embeddings/tSNE_e.md"
     source: "pear_ebi/embeddings/tSNE_e.py"
     functions:
       - tsne
-
-  - page: "modules/pear_ebi/embeddings/PCA_e.md"
-    source: "pear_ebi/embeddings/PCA_e.py"
-    functions:
-      - pca
 
   - page: "modules/pear_ebi/embeddings/Isomap_e.md"
     source: "pear_ebi/embeddings/Isomap_e.py"
@@ -101,3 +106,10 @@ pages:
     source: "pear_ebi/subsample/subsample_multiprocess.py"
     functions:
       - subsample
+
+
+  - page: "tutorials/How_to_use_pear_ebi.md"
+
+  - page: "tutorials/Advanced_use_of_pear_ebi.md"
+
+  - page: "tutorials/How_to_use_pear_ebi_on_python_and_reproduce_the_examples_on_the_paper.md"

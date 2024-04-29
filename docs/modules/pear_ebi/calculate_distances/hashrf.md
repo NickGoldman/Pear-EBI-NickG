@@ -54,7 +54,7 @@ Computes unweighted Robison Foulds distances
 
 
 ### hashrf_weighted
-[source](https://github.com/AndreaRubbi/Pear-EBI/blob/master/pear_ebi/calculate_distances/hashrf.py/#L88)
+[source](https://github.com/AndreaRubbi/Pear-EBI/blob/master/pear_ebi/calculate_distances/hashrf.py/#L98)
 ```python
 .hashrf_weighted(
    file, n_trees, output_file

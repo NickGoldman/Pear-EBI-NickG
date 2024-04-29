@@ -2,12 +2,12 @@
 
 
 ### plot_embedding
-[source](https://github.com/AndreaRubbi/Pear-EBI/blob/master/pear_ebi/embeddings/graph/graph.py/#L17)
+[source](https://github.com/AndreaRubbi/Pear-EBI/blob/master/pear_ebi/embeddings/graph/graph.py/#L20)
 ```python
 .plot_embedding(
    data, metadata, dimensions, save = False, name_plot = 'Tree_embedding',
    static = False, plot_meta = 'SET-ID', plot_set = None, select = False,
-   same_scale = False
+   same_scale = False, z_axis = None
 )
 ```
 

@@ -2,67 +2,87 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://pypi.org/project/pear-ebi/0.1.1.10/index.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/tree_emb_parser.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/gendoc.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/tree_set.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/tree_emb_parser.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/calculate_distances/hashrf.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/tree_set.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/calculate_distances/maple_RF.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/calculate_distances/hashrf.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/calculate_distances/tqdist.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/calculate_distances/maple_RF.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/embeddings/PCA_e.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/calculate_distances/tqdist.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/embeddings/pear_corr.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/embeddings/Isomap_e.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/embeddings/tSNE_e.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/embeddings/LLE_e.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/embeddings/graph/graph.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/embeddings/PCoA_e.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/interactive_mode/interactive.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/embeddings/emb_quality.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/subsample/subsample.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/embeddings/tSNE_e.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/pear_ebi/subsample/subsample_multiprocess.html</loc>
-         <lastmod>2023-02-20</lastmod>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/embeddings/graph/graph.html</loc>
+         <lastmod>2024-04-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/interactive_mode/interactive.html</loc>
+         <lastmod>2024-04-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/subsample/subsample.html</loc>
+         <lastmod>2024-04-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/pear_ebi/subsample/subsample_multiprocess.html</loc>
+         <lastmod>2024-04-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/modules/test/test.html</loc>
+         <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
 </urlset>
