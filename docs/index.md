@@ -1,6 +1,6 @@
 
  <h1> Phylogeny Embedding  & <br>  Approximate Representation </h1>
- <img src="https://github.com/AndreaRubbi/Pear-EBI/raw/pear_ebi/logos/LOGO_PEAR.png" width="100" height="100" style='position:absolute; left:400px; top:-15px' >
+ <img src="https://github.com/AndreaRubbi/Pear-EBI/raw/pear_ebi/logos/LOGO_PEAR.png" width="100" height="100" style='position:absolute; left:900px; top:75px' >
 
  <img src="https://img.shields.io/github/license/AndreaRubbi/Pear-EBI?color=red&label=License&style=plastic"> <img src="https://img.shields.io/pypi/v/pear_ebi?color=purple&label=version&style=plastic"> <img src="https://img.shields.io/pypi/implementation/pear_ebi?style=plastic"> <img src="https://img.shields.io/pypi/pyversions/pear_ebi?color=green&style=plastic">
 
