@@ -106,10 +106,3 @@ pages:
     source: "pear_ebi/subsample/subsample_multiprocess.py"
     functions:
       - subsample
-
-
-  - page: "tutorials/How_to_use_pear_ebi.md"
-
-  - page: "tutorials/Advanced_use_of_pear_ebi.md"
-
-  - page: "tutorials/How_to_use_pear_ebi_on_python_and_reproduce_the_examples_on_the_paper.md"
