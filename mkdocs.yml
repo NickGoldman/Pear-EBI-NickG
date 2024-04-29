@@ -24,7 +24,7 @@ theme:
   icon:
     logo: fontawesome/solid/code
   #logo: "logos/goldman_logo.ico"
-  favicon: "/logos/LOGO_PEAR.ico" # "/docs_assets/images/favicon.ico"
+  favicon: "/logos/LOGO_PEAR.png" # "/docs_assets/images/favicon.ico"
   language: "en"
 
 plugins:

@@ -16,7 +16,7 @@ See also the <a href="https://andrearubbi.github.io/Pear-EBI/index.html"> autoge
 
 PEAR usage
 ==========
-Pear is both a python software and library. It can be installed with `python -m pip install pear_ebi` or downloaded from <a href="https://github.com/AndreaRubbi/Pear-EBI">Github</a>. Pear is currently compatible with Linux and Mac OSs.
+Pear is both a python software and library. It can be installed with `python -m pip install pear_ebi` or downloaded from <a href="https://github.com/AndreaRubbi/Pear-EBI">Github</a>. Pear is currently compatible only with Linux.
 
 PEAR as a python library
 ------------------------
@@ -35,11 +35,11 @@ the flag *-m* indicates the method used to compute the dissimilarity between phy
 
 To embed these distances in a lower-dimensional space, we can use PCoA (MDS) or tSNE:
 
-`pear_ebi examples_tree_sets/beast_trees/beast_run1.trees -m hashrf_RF --pca 2`
+`pear_ebi examples_tree_sets/beast_trees/beast_run1.trees -m hashrf_RF --pcoa 2`
 
 we therefore embedded the distance matrix in 2 dimensions. Using the flag *-quality* one can assess the correlation between the distances in the N-dimensional space and in the embedding.
 
-`pear_ebi examples_tree_sets/beast_trees/beast_run1.trees -m hashrf_RF --pca 2 --plot`
+`pear_ebi examples_tree_sets/beast_trees/beast_run1.trees -m hashrf_RF --pcoa 2 --plot`
 
 The flag *-plot* indicates that PEAR has to plot the embeddings and show them, respectively. If an embedding method is specified the plots are produced anyway. Plotting doesn't require any indication on the number of dimensions as the embeddings are represented in 2 dimensions if the distances are embedded in 2 dimensions, while it plots on 2 and 3 dimensions in any other case.
 

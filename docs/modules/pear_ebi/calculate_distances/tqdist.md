@@ -54,7 +54,7 @@ Computes quartet distances
 
 
 ### triplet
-[source](https://github.com/AndreaRubbi/Pear-EBI/blob/master/pear_ebi/calculate_distances/tqdist.py/#L99)
+[source](https://github.com/AndreaRubbi/Pear-EBI/blob/master/pear_ebi/calculate_distances/tqdist.py/#L107)
 ```python
 .triplet(
    file, n_trees, output_file

@@ -1,5 +1,5 @@
-// Script to ensure timeago keeps working when
-// used with mkdocs-material's instant loading feature
+// Script to ensure timeago keeps working when 
+// used with mkdocs-material's instant loading feature 
 
 if (typeof document$ !== "undefined") {
     document$.subscribe(function() {
