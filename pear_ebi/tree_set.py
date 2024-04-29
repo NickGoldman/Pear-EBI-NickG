@@ -58,7 +58,7 @@ from scipy.sparse import SparseEfficiencyWarning
 # importing other modules
 # try:
 from .calculate_distances import hashrf, maple_RF, tqdist
-from .embeddings import Isomap_e, LLE_e, PCA_e, tSNE_e
+from .embeddings import Isomap_e, LLE_e, PCoA_e, tSNE_e
 from .embeddings.graph import graph
 from .interactive_mode import interactive
 from .subsample import subsample
@@ -93,9 +93,9 @@ class tree_set:
         self.output_file = output_file
         self.distance_matrix = distance_matrix
         self.metadata = metadata
-        self.embedding_pca2D = None
+        self.embedding_pcoa2D = None
         self.embedding_tsne2D = None
-        self.embedding_pca3D = None
+        self.embedding_pcoa3D = None
         self.embedding_tsne3D = None
 
         if self.output_file == None:
@@ -190,7 +190,7 @@ class tree_set:
             quality (bool, optional): returns quality report and self.emb_quality. Defaults to False.
         """
         methods = {
-            "pca": PCA_e.pca,
+            "pcoa": PCoA_e.pcoa,
             "tsne": tSNE_e.tsne,
             "isomap": Isomap_e.isomap,
             "lle": LLE_e.lle,
@@ -200,12 +200,13 @@ class tree_set:
         if type(self.distance_matrix) == type(None):
             self.calculate_distances("hashrf_RF")
 
-        dim = dimensions if dimensions > 2 else 3
+        if dimensions < 2:
+            sys.exit("Dimensions of embedding must be greater or equal to 2")
 
         with self.console.status("[bold green]Embedding distances...") as status:
             embedding = methods[method](
                 self.distance_matrix,
-                dim,
+                dimensions,
                 self.metadata,
                 quality=quality if not report else True,
                 report=report,
@@ -213,7 +214,7 @@ class tree_set:
         print(f"[bold blue]{method} | Done!")
 
         if quality:
-            if method == "pca":
+            if method == "pcoa":
                 embedding, var, corr, self.emb_quality = embedding
                 print(
                     f"With {dimensions} components/dimensions, the explained variance is {var:.2f},\n with an estimated correlation {corr[0, 1]:.2f} with the {self.n_trees}-dimensional coordinates"
@@ -224,10 +225,16 @@ class tree_set:
                     f"With {dimensions} components/dimensions, the estimated correlation with the {self.n_trees}-dimensional coordinates is {corr[0, 1]:.2f}"
                 )
 
-        if method == "pca":
-            self.embedding_pca = embedding
-            self.embedding_pca3D = embedding[:, :4]
-            self.embedding_pca2D = embedding[:, :3]
+        if method == "pcoa":
+            self.embedding_pcoa = embedding
+            if dimensions == 2:
+                self.embedding_pcoa2D = embedding
+            if dimensions == 3:
+                self.embedding_pcoa2D = embedding[:, :3]
+                self.embedding_pcoa3D = embedding
+            if dimensions > 3:
+                self.embedding_pcoa3D = embedding[:, :4]
+                self.embedding_pcoa2D = embedding[:, :3]
 
         elif method == "tsne":
             if dimensions > 3:
@@ -235,8 +242,14 @@ class tree_set:
                     "t-SNE with more than 3 dimensions can be considerably slow"
                 )
             self.embedding_tsne = embedding
-            self.embedding_tsne3D = embedding[:, :4]
-            self.embedding_tsne2D = embedding[:, :3]
+            if dimensions == 2:
+                self.embedding_tsne2D = embedding
+            if dimensions == 3:
+                self.embedding_tsne2D = embedding[:, :3]
+                self.embedding_tsne3D = embedding
+            if dimensions > 3:
+                self.embedding_tsne3D = embedding[:, :4]
+                self.embedding_tsne2D = embedding[:, :3]
 
         elif method == "isomap":
             if dimensions > 3:
@@ -244,15 +257,27 @@ class tree_set:
                     "Isomap with more than 3 dimensions can be considerably slow"
                 )
             self.embedding_isomap = embedding
-            self.embedding_isomap3D = embedding[:, :4]
-            self.embedding_isomap2D = embedding[:, :3]
+            if dimensions == 2:
+                self.embedding_isomap2D = embedding
+            if dimensions == 3:
+                self.embedding_isomap2D = embedding[:, :3]
+                self.embedding_isomap3D = embedding
+            if dimensions > 3:
+                self.embedding_isomap3D = embedding[:, :4]
+                self.embedding_isomap2D = embedding[:, :3]
 
         elif method == "lle":
             if dimensions > 3:
                 warnings.warn("LLE with more than 3 dimensions can be considerably slow")
             self.embedding_lle = embedding
-            self.embedding_lle3D = embedding[:, :4]
-            self.embedding_lle2D = embedding[:, :3]
+            if dimensions == 2:
+                self.embedding_lle2D = embedding
+            if dimensions == 3:
+                self.embedding_lle2D = embedding[:, :3]
+                self.embedding_lle3D = embedding
+            if dimensions > 3:
+                self.embedding_lle3D = embedding[:, :4]
+                self.embedding_lle2D = embedding[:, :3]
 
     # ─── PLOT EMBEDDING ─────────────────────────────────────────────────────────
 
@@ -280,7 +305,7 @@ class tree_set:
             same_scale (bool, optional): use same color_scale for all traces when scale is continuous. Defaults to False.
 
         Raises:
-            ValueError: method can only be either pca or tsne for now
+            ValueError: method can only be either pcoa or tsne for now
 
         Returns:
             plot: either interactive or not
@@ -289,13 +314,13 @@ class tree_set:
         # you can surely write something better here @andrear
         if type(plot_set) == type(None):
             plot_set = self.sets
-        if method == "pca":
+        if method == "pcoa":
             if name_plot == None:
-                name_plot = "PCA_2D"
-            if type(self.embedding_pca2D) == type(None):
-                self.embed("pca", 2)
+                name_plot = "PCoA_2D"
+            if type(self.embedding_pcoa2D) == type(None):
+                self.embed("pcoa", 2)
             fig = graph.plot_embedding(
-                self.embedding_pca2D,
+                self.embedding_pcoa2D,
                 self.metadata,
                 2,
                 save,
@@ -362,7 +387,7 @@ class tree_set:
             )
 
         else:
-            raise ValueError("'method' can only be either 'pca' or 'tsne' ")
+            raise ValueError("'method' can only be either 'pcoa' or 'tsne' ")
 
         return fig
 
@@ -391,20 +416,20 @@ class tree_set:
             same_scale (bool, optional): use same color_scale for all traces when scale is continuous. Defaults to False.
 
         Raises:
-            ValueError: method can only be either pca or tsne for now
+            ValueError: method can only be either pcoa or tsne for now
 
         Returns:
             plot: either interactive or not
         """
         if type(plot_set) == type(None):
             plot_set = self.sets
-        if method == "pca":
+        if method == "pcoa":
             if name_plot == None:
-                name_plot = "PCA_3D"
-            if type(self.embedding_pca3D) == type(None):
-                self.embed("pca", 3)
+                name_plot = "PCoA_3D"
+            if type(self.embedding_pcoa3D) == type(None):
+                self.embed("pcoa", 3)
             fig = graph.plot_embedding(
-                self.embedding_pca3D,
+                self.embedding_pcoa3D,
                 self.metadata,
                 3,
                 save,
@@ -475,7 +500,7 @@ class tree_set:
             )
 
         else:
-            raise ValueError("'method' can only be either 'pca' or 'tsne' ")
+            raise ValueError("'method' can only be either 'pcoa' or 'tsne' ")
 
         return fig
 
@@ -540,7 +565,7 @@ class tree_set:
             # print(len(subsample_trees), len(idxs))
             status.update("[bold green]Calculating distances...")
             dM = hashrf.hashrf(file_sub, n_required, file_sub + "_distances.csv")
-            components = PCA_e.pca(dM, 3)
+            components = PCoA_e.pcoa(dM, 3)
             status.update(f"[bold blue] Done!")
             time.sleep(0.2)
 
@@ -586,9 +611,9 @@ class set_collection(tree_set):
             if distance_matrix
             else distance_matrix
         )
-        self.embedding_pca2D = None
+        self.embedding_pcoa2D = None
         self.embedding_tsne2D = None
-        self.embedding_pca3D = None
+        self.embedding_pcoa3D = None
         self.embedding_tsne3D = None
 
         if self.file != "Set_collection_" + str(self.id) and output_file is None:

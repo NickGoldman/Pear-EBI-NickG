@@ -8,7 +8,7 @@ long_description = (this_directory / "README.md").read_text()
 
 setup(
     name="pear_ebi",
-    version="0.1.83",
+    version="0.1.86",
     license="MIT License",
     description="Embeds phylogenetic tree distances and produce representations",
     long_description=long_description,
@@ -42,6 +42,7 @@ setup(
         "tqdm",
         "toml",
         "ipywidgets==7.7.2",
+        "kaleido",
     ],
     entry_points={"console_scripts": ["pear_ebi = pear_ebi.__main__:main"]},
 )

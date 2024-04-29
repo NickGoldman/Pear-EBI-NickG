@@ -11,7 +11,7 @@ pattern = '*run2*'
 method = "hashrf_RF"
 
 [embedding]
-method = "pca" # embedding method between: pca, tsne, isomap, lle
+method = "pcoa" # embedding method between: pcoa, tsne, isomap, lle
 dimensions = 3
 
 [highlight]

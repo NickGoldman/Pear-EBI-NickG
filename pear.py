@@ -32,7 +32,7 @@ def main():
 
     import pear_ebi.tree_emb_parser
     from pear_ebi.calculate_distances import hashrf
-    from pear_ebi.embeddings import PCA_e, tSNE_e
+    from pear_ebi.embeddings import PCoA_e, tSNE_e
     from pear_ebi.interactive_mode import interactive
     from pear_ebi.tree_set import set_collection, tree_set
 
@@ -237,6 +237,17 @@ def main():
             # with the value given in terminal
             # ─── Compute Distances ────────────────────────────────────────
             method = config["method"] if args.method is None else args.method
+            if method not in (
+                "hashrf_RF",
+                "hashrf_wRF",
+                "smart_RF",
+                "tqdist_quartet",
+                "tqdist_triplet",
+                None,
+            ):
+                sys.exit(
+                    "Invalid method - choose among: hashrf_RF, hashrf_wRF, smart_RF, tqdist_quartet, tqdist_triplet"
+                )
             if method is not None:
                 SET.calculate_distances(method)
 
@@ -250,7 +261,7 @@ def main():
                 method_embedding = (
                     config["embedding"]["method"]
                     if config["embedding"]["method"] is not None
-                    else "pca"
+                    else "PCoA"
                 )
                 dimensions = (
                     config["embedding"]["dimensions"]
@@ -284,9 +295,9 @@ def main():
             #    report = True
             report = False
 
-            if args.pca is not None:
-                method_embedding = "pca"
-                dimensions = args.pca
+            if args.pcoa is not None:
+                method_embedding = "pcoa"
+                dimensions = args.pcoa
             elif config["embedding"] is None and args.tsne is None:
                 method_embedding = None
                 dimensions = None
@@ -294,7 +305,7 @@ def main():
             if args.tsne is not None:
                 method_embedding = "tsne"
                 dimensions = args.tsne
-            elif config["embedding"] is None and args.pca is None:
+            elif config["embedding"] is None and args.pcoa is None:
                 method_embedding = None
                 dimensions = None
 
@@ -364,7 +375,7 @@ def main():
                     name_plot = config["plot"]["name"]
                     plot_meta = (
                         config["plot"]["plot_meta"]
-                        if config["plot"]["meta"] is not None
+                        if config["plot"]["plot_meta"] is not None
                         else "SET-ID"
                     )
                     plot_set = config["plot"]["plot_set"]
@@ -378,12 +389,12 @@ def main():
                         if config["plot"]["same_scale"] is not None
                         else False
                     )
-                    z_axis = config["plot"]["z_axis"]
                     show = (
                         config["plot"]["show"]
                         if config["plot"]["show"] is not None
                         else False
                     )
+                    z_axis = config["plot"]["z_axis"]
 
                     if dimensions > 2:
                         name_plot3d = (
@@ -397,6 +408,7 @@ def main():
                             plot_meta=plot_meta,
                             plot_set=plot_set,
                             select=select,
+                            z_axis=z_axis,
                             same_scale=same_scale,
                             save=True,
                         )
@@ -423,6 +435,9 @@ def main():
                         fig.show()
 
                 else:
+                    if "name_plot" not in globals() and "name_plot" not in locals():
+                        name_plot = None
+
                     if dimensions > 2:
                         name_plot3d = (
                             name_plot + "3D"

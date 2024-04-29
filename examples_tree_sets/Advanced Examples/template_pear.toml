@@ -27,7 +27,7 @@
 method = "hashrf"
 
 [embedding]
-method = "isomap" # embedding method between: pca, tsne, isomap, lle
+method = "isomap" # embedding method between: pcoa, tsne, isomap, lle
 dimensions = 3 # number of dimensions
 quality = false # display quality | default is false
 

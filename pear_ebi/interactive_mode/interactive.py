@@ -80,14 +80,14 @@ def embedding(SET):
             continue
 
     if method == 1:
-        SET.embed("pca", dimensions, quality=True)
+        SET.embed("pcoa", dimensions, quality=True)
     elif method == 2:
         SET.embed("tsne", dimensions, quality=True)
     return 0
 
 
 def plotting(SET):
-    methods = ["pca", "tsne"]
+    methods = ["pcoa", "tsne"]
     while True:
         try:
             method = int(input("Method (1:PCoA - 2:t-SNE): "))

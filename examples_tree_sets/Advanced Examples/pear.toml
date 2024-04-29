@@ -11,7 +11,7 @@ distance_matrix = "DistMat_Maple.csv"
 metadata = "Likelihoods.csv"
 
 [embedding]
-method = "pca"
+method = "pcoa"
 dimensions = 3
 
 [plot]
