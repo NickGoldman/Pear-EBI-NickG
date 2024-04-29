@@ -85,4 +85,19 @@
          <lastmod>2024-04-29</lastmod>
          <changefreq>daily</changefreq>
     </url>
+    <url>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/tutorials/1How_to_use_pear_ebi.html</loc>
+         <lastmod>2024-04-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/tutorials/2Advanced%20use%20of%20pear_ebi.html</loc>
+         <lastmod>2024-04-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://pypi.org/project/pear-ebi/0.1.1.10/tutorials/3How%20to%20use%20pear_ebi%20on%20python%20and%20reproduce%20the%20examples%20on%20the%20paper.html</loc>
+         <lastmod>2024-04-29</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
 </urlset>
