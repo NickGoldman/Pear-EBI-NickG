@@ -93,7 +93,7 @@ def main():
                 print("[orange1]\n- Leaving PEAR -")
                 exit()
             try:
-                exec(interactive.interact(control))
+                exec(interactive.interact(control), locals(), globals())
             except KeyboardInterrupt:
                 print("[red] Interrupted")
                 pass

@@ -181,7 +181,7 @@ class tree_set:
         print(f"[bold blue]{method} | Done!")
 
     # ─── EMBED ─────────────────────────────────────────────────────────────────
-    def embed(self, method, dimensions, quality=False, report=False):
+    def embed(self, method, dimensions, quality=False, report=False, output=None):
         """Compute embedding with n-dimensions and method of choice
 
         Args:
@@ -203,6 +203,8 @@ class tree_set:
         if dimensions < 2:
             sys.exit("Dimensions of embedding must be greater or equal to 2")
 
+        if output == None:
+            output = f"./{os.path.splitext(os.path.basename(self.file))[0]}_{str.upper(method)}_embedding.csv"
         with self.console.status("[bold green]Embedding distances...") as status:
             embedding = methods[method](
                 self.distance_matrix,
@@ -210,6 +212,7 @@ class tree_set:
                 self.metadata,
                 quality=quality if not report else True,
                 report=report,
+                output=output,
             )
         print(f"[bold blue]{method} | Done!")
 
@@ -316,7 +319,9 @@ class tree_set:
             plot_set = self.sets
         if method == "pcoa":
             if name_plot == None:
-                name_plot = "PCoA_2D"
+                name_plot = (
+                    f"./{os.path.splitext(os.path.basename(self.file))[0]}_PCOA_2D"
+                )
             if type(self.embedding_pcoa2D) == type(None):
                 self.embed("pcoa", 2)
             fig = graph.plot_embedding(
@@ -334,7 +339,9 @@ class tree_set:
 
         elif method == "tsne":
             if name_plot == None:
-                name_plot = "TSNE_2D"
+                name_plot = (
+                    f"./{os.path.splitext(os.path.basename(self.file))[0]}_TSNE_2D"
+                )
             if type(self.embedding_tsne2D) == type(None):
                 self.embed("tsne", 2)
             fig = graph.plot_embedding(
@@ -352,7 +359,9 @@ class tree_set:
 
         elif method == "isomap":
             if name_plot == None:
-                name_plot = "ISOMAP_2D"
+                name_plot = (
+                    f"./{os.path.splitext(os.path.basename(self.file))[0]}_ISOMAP_2D"
+                )
             if type(self.embedding_isomap2D) == type(None):
                 self.embed("isomap", 2)
             fig = graph.plot_embedding(
@@ -370,7 +379,7 @@ class tree_set:
 
         elif method == "lle":
             if name_plot == None:
-                name_plot = "LLE_2D"
+                name_plot = f"./{os.path.splitext(os.path.basename(self.file))[0]}_LLE_2D"
             if type(self.embedding_lle2D) == type(None):
                 self.embed("lle", 2)
             fig = graph.plot_embedding(
@@ -425,7 +434,9 @@ class tree_set:
             plot_set = self.sets
         if method == "pcoa":
             if name_plot == None:
-                name_plot = "PCoA_3D"
+                name_plot = (
+                    f"./{os.path.splitext(os.path.basename(self.file))[0]}_PCOA_3D"
+                )
             if type(self.embedding_pcoa3D) == type(None):
                 self.embed("pcoa", 3)
             fig = graph.plot_embedding(
@@ -444,7 +455,9 @@ class tree_set:
 
         elif method == "tsne":
             if name_plot == None:
-                name_plot = "TSNE_3D"
+                name_plot = (
+                    f"./{os.path.splitext(os.path.basename(self.file))[0]}_TSNE_3D"
+                )
             if type(self.embedding_tsne3D) == type(None):
                 self.embed("tsne", 3)
             fig = graph.plot_embedding(
@@ -463,7 +476,9 @@ class tree_set:
 
         elif method == "isomap":
             if name_plot == None:
-                name_plot = "ISOMAP_3D"
+                name_plot = (
+                    f"./{os.path.splitext(os.path.basename(self.file))[0]}_ISOMAP_3D"
+                )
             if type(self.embedding_isomap3D) == type(None):
                 self.embed("isomap", 3)
             fig = graph.plot_embedding(
@@ -482,7 +497,7 @@ class tree_set:
 
         elif method == "lle":
             if name_plot == None:
-                name_plot = "LLE_3D"
+                name_plot = f"./{os.path.splitext(os.path.basename(self.file))[0]}_LLE_3D"
             if type(self.embedding_lle3D) == type(None):
                 self.embed("lle", 3)
             fig = graph.plot_embedding(
@@ -516,6 +531,10 @@ class tree_set:
         Returns:
             subset plots: 2D and 3D embedding plots of subset
         """
+        if isinstance(self, set_collection):
+            files = [TS.file for TS in self.collection]
+        else:
+            files = [self.file]
         console = Console()
         with console.status("[bold blue]Extracting subsample...") as status:
             if method == "syst":
@@ -523,7 +542,7 @@ class tree_set:
                     command = [
                         "pypy3",
                         f"{current}/subsample/subsample.py",
-                        self.file,
+                        str(files),
                         str(self.n_trees),
                         str(n_required),
                     ]
@@ -531,18 +550,25 @@ class tree_set:
                         "\n"
                     )
                     subsample_trees, idxs = eval(res[3]), eval(res[4])
+
                 else:
                     console.log(
                         "[bold red]Could not find pypy3 on your sytem PATH - using python3..."
                     )
                     subsample_trees, idxs = subsample.subsample(
-                        self.file, self.n_trees, n_required, subp=False
+                        str(files), self.n_trees, n_required, subp=False
                     )
 
             else:
-                with open(self.file, "r") as f:
-                    trees = list(enumerate(f.readlines()))
-                    f.close()
+                trees = list()
+                last_max = 0
+                for file in files:
+                    with open(file, "r") as f:
+                        trees_file = list(f.readlines())
+                        n_t = len(trees_file)
+                        trees.extend(list(enumerate(trees_file, start=last_max)))
+                        last_max += n_t
+                        f.close()
 
                 if method == "random":
                     selection = random.sample(trees, n_required)
@@ -557,7 +583,7 @@ class tree_set:
                 else:
                     sys.exit(f"Method {method} not available for subsampling")
 
-            file_sub = f"SUBSAMPLE"
+            file_sub = f"{self.file}_SUBSAMPLE"
             with open(file_sub, "w") as f:
                 for i in subsample_trees:
                     f.write(i)
@@ -605,7 +631,7 @@ class set_collection(tree_set):
         output_file: facultative - specifies output_file of distance matrix"""
 
         self.id = uuid.uuid4()
-        self.file = file + str(self.id)
+        self.file = file + str(self.id) if file == "Set_collection_" else file
         self.distance_matrix = (
             pd.read_csv(distance_matrix, header=None, index_col=None).values  #
             if distance_matrix
@@ -630,11 +656,11 @@ class set_collection(tree_set):
 
         if isinstance(collection, tree_set):
             self.collection = [collection]
-            with open(self.file, "w") as trees:
-                with open(collection.file, "r") as file:
-                    trees.write(file.read())
-                    file.close()
-                trees.close()
+            # with open(self.file, "w") as trees:
+            #    with open(collection.file, "r") as file:
+            #        trees.write(file.read())
+            #        file.close()
+            #    trees.close()
 
         elif len(collection) > 0:
             remove = list()
@@ -720,7 +746,13 @@ class set_collection(tree_set):
             "None": None,
         }
 
-        if method in ("hashrf_RF", "hashrf_wRF", "tqdist_quartet", "tqdist_triplet"):
+        if method in (
+            "hashrf_RF",
+            "hashrf_wRF",
+            "smart_RF",
+            "tqdist_quartet",
+            "tqdist_triplet",
+        ):
             with open(self.file, "w") as trees:
                 for set in self.collection:
                     with open(set.file, "r") as file:
