@@ -20,7 +20,7 @@ except:
 #! therefore it is hard to control the sampling
 
 
-def subsample(file, n_trees, n_required, subp=True):
+def subsample(files, n_trees, n_required, subp=True):
     """subsample a set of trees considering their
        distribution in the n_trees dimensional space.
        It tries to maximize the distance between the
@@ -43,9 +43,18 @@ def subsample(file, n_trees, n_required, subp=True):
         idxs (list): list of indexes of the trees subsampled.
     """
     global trees
-    with open(file, "r") as f:
-        trees = {tree: idx for idx, tree in enumerate(list(f.readlines()))}
-        f.close()
+    files = files[1:-1].replace("'", "").split(", ")
+    trees = list()
+    last_max = 0
+    for file in files:
+        with open(file, "r") as f:
+            trees_file = list(f.readlines())
+            n_t = len(trees_file)
+            trees.extend(list(enumerate(trees_file, start=last_max)))
+            last_max += n_t
+            f.close()
+
+    trees = {tree: idx for idx, tree in trees}
 
     MD1_tree = random.sample(trees.keys(), 1)[0]
     MD1_idx = trees[MD1_tree]

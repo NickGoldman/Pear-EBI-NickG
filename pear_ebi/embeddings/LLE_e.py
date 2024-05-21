@@ -9,7 +9,14 @@ from .emb_quality import DRM, pear_correlation
 
 # ──────────────────────────────────────────────────────────────────────────────
 # ─── LLE N COMPONENTS ─────────────────────────────────────────────────────────
-def lle(distance_matrix, n_components, metadata=None, quality=False, report=False):
+def lle(
+    distance_matrix,
+    n_components,
+    metadata=None,
+    quality=False,
+    report=False,
+    output="./LLE_Embedding.csv",
+):
     """embed distance_matrix in n_components with Locally Linear Embedding
 
     Args:
@@ -23,7 +30,7 @@ def lle(distance_matrix, n_components, metadata=None, quality=False, report=Fals
     embedding, _err_ = locally_linear_embedding(
         distance_matrix, n_neighbors=5, n_components=n_components
     )
-    pd.DataFrame(embedding).to_csv("./ISOMAP_Embedding.csv", header=False, index=False)
+    pd.DataFrame(embedding).to_csv(output, header=False, index=False)
 
     if report:
         Xr = None

@@ -4,6 +4,8 @@ import sys
 import rich
 from rich import print
 
+from ..tree_set import set_collection, tree_set
+
 # getting the name of the directory
 current = os.path.dirname(os.path.realpath(__file__))
 
@@ -45,7 +47,7 @@ def calculate_distances(SET):
         try:
             method = int(
                 input(
-                    "Method (1:hashrf - 2:weighted hashrf - 3:day's rf - 4:quartet - 5:triplet): "
+                    "Method (1:hashrf - 2:weighted hashrf - 3:smart rf - 4:quartet - 5:triplet): "
                 )
             )
         except ValueError:
@@ -79,10 +81,18 @@ def embedding(SET):
             print("")
             continue
 
+    while True:
+        show = input("Compute quality of the embedding (y/n): (default is no)  ")
+        if show in ("y", "n", "Y", "N", "Yes", "No", "yes", "no", ""):
+            quality = True if show in ("y", "Y", "Yes", "yes") else False
+            break
+        else:
+            print("[bold orange1]Please select valid value")
+
     if method == 1:
-        SET.embed("pcoa", dimensions, quality=True)
+        SET.embed("pcoa", dimensions, quality=quality)
     elif method == 2:
-        SET.embed("tsne", dimensions, quality=True)
+        SET.embed("tsne", dimensions, quality=quality)
     return 0
 
 
@@ -127,16 +137,28 @@ def plotting(SET):
     return 0
 
 
-def add_set():
-    global SET
+def add_set(SET):
     while True:
         filename = input("Specify file name: ")
         try:
             open(filename, "r").close()
-            break
         except:
             print("[bold orange1]Cannot find the specified file")
-    return filename
+
+        try:
+            set_to_add = tree_set(filename)
+        except:
+            print("[bold orange1]Cannot load the specified file as a set of trees")
+
+        try:
+            if isinstance(SET, set_collection):
+                SET = SET.concatenate(set_to_add)
+            elif isinstance(SET, tree_set):
+                SET = set_collection([SET, set_to_add])
+            break
+        except:
+            print("[bold orange1]Cannot concatenate the specified file.")
+    return SET
 
 
 def get_subset(SET):
@@ -174,11 +196,11 @@ def interact(control):
             2: "interactive.calculate_distances(SET)",
             3: "interactive.embedding(SET)",
             4: "interactive.plotting(SET)",
-            5: "SET = set_collection(tree_set(interactive.add_set())) + SET",  # "interactive.add_set()",
+            5: "SET = interactive.add_set(SET)",
             6: "interactive.get_subset(SET)",
             7: "interactive.exit_program()",
             8: "interactive.usage()",
         }
         return Actions[control]
     except KeyError:
-        return "Operation unavailable"
+        return 'print("[bold orange1]Operation unavailable")'
