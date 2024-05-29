@@ -55,16 +55,15 @@ sys.path.append(parent)
 # silencing some warnings
 from scipy.sparse import SparseEfficiencyWarning
 
-# importing other modules
-# try:
 from .calculate_distances import hashrf, maple_RF, tqdist
 from .embeddings import Isomap_e, LLE_e, PCoA_e, tSNE_e
 from .embeddings.graph import graph
-from .interactive_mode import interactive
+# from .interactive_mode import interactive
 from .subsample import subsample
 
-# except:
-#    sys.exit("Error")
+# importing other modules
+
+
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 warnings.filterwarnings("ignore", category=UserWarning)

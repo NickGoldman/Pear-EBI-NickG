@@ -4,8 +4,8 @@ import builtins
 import random
 import warnings
 
-import matplotlib
 import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.express as px
@@ -71,7 +71,7 @@ def plot_embedding(
     metadata_colors = dict()
     for meta in metadata.columns:  # for each metadata column
         elements = np.unique(metadata[meta])  # unique elements
-        color_plot = np.array(metadata[meta].values)  # get meta column
+        color_plot = np.array(metadata[meta].values, dtype=object)  # get meta column
 
         colorscales_cmap = [
             "Accent",
@@ -286,12 +286,23 @@ def plot_embedding(
             "#6a3d9a",
         ]
         colorscale_cont = random.sample(colorscales, 1)[0]
-        cmap = cm.get_cmap(colorscale_cont, max(20, len(elements)))
-        # here we generate a color map --> if there are more than 10 unique elements,
+        cmap = plt.get_cmap(colorscale_cont, max(20, len(elements)))
+        # here we generate a color map --> if the meta is a number,
         # we assume that the variable is some sort of continuous parameter. e.g. likelihood, step, parsimony...
         cont_colorsc = False
-        if len(elements) > 10:
+        if np.issubdtype(elements.dtype, np.number):
             cont_colorsc = True
+
+            min_value = np.min(elements)
+            max_value = np.max(elements)
+
+            norm = mcolors.Normalize(vmin=min_value, vmax=max_value)
+            scalar_map = cm.ScalarMappable(norm=norm, cmap=cmap)
+
+            if same_scale:
+                for i, elem in enumerate(metadata[meta]):
+                    color_plot[i] = mcolors.rgb2hex(scalar_map.to_rgba(elem)[:3])
+
         # else, we presume this is some kind of difference between sets - e.g. different tree_set
         # we generate random colors to maximize the visual division
         else:
@@ -311,11 +322,19 @@ def plot_embedding(
             idx = metadata["SET-ID"] == SetID
             color_plot_set = color_plot[idx]
             if cont_colorsc:
-                col_list = (
-                    colorscales_GO[i % len(colorscales_GO)] if not same_scale else "jet"
-                )
+                col_list = colorscales_GO[i % len(colorscales_GO)]
+                if same_scale:
+                    set_elements = metadata[meta][idx]
+
+                    color_plot_set = [
+                        mcolors.rgb2hex(scalar_map.to_rgba(elem)[:3])
+                        for elem in set_elements
+                    ]
+                else:
+                    pass
+
             color = col_list
-            if len(np.unique(color_plot_set)) == 1:
+            if len(np.unique(color_plot_set)) == 1 and not cont_colorsc:
                 if i > len(Sets):
                     color = random.sample(
                         [mcolors.rgb2hex(cmap(i)[:3]) for i in range(cmap.N)], 10
@@ -325,7 +344,7 @@ def plot_embedding(
                         colors_nick_goldman[i % len(colors_nick_goldman)]
                         for j in range(3)
                     ]  # for some reason plotly wants a list of colors to sample from
-            metadata_colors[f"{meta}_color_plot"].append(color_plot_set.tolist())
+            metadata_colors[f"{meta}_color_plot"].append(color_plot_set)  # .tolist())
             metadata_colors[f"{meta}_color_map"].append(color)
 
     # initialize go.Figure()
