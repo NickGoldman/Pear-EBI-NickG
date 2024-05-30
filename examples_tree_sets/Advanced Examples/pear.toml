@@ -7,8 +7,8 @@ file5 = "../MAPLE_res/UshERStartingTree_Trees"
 file6 = "../MAPLE_res/TrueTreeSimulations"
 
 [collection]
-distance_matrix = "DistMat_Maple.csv"
-metadata = "Likelihoods.csv"
+distance_matrix = "../MAPLE_res/DistMat_Maple.csv"
+metadata = "../MAPLE_res/Likelihoods.csv"
 
 [embedding]
 method = "pcoa"
