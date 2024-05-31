@@ -13,7 +13,7 @@ def parser():
         prog="PEAR",
         description=f"PEAR-EBI v{pear_ebi.__version__} | \
         Phylogeny Embedding and Approximate Representation \n \
-        Calculates Robison-Foulds distances between large set of trees",
+        Calculates Robinson-Foulds distances between large set of trees",
         epilog="Author: Andrea Rubbi - Goldman Group | European Bioinformatics Institute",
     )
 
@@ -29,7 +29,7 @@ def parser():
         type=str,
         dest="input",
         metavar="input",
-        help="input file : tree set in newic format",
+        help="input file : tree set in Newick format",
         nargs="*",  # "?",
     )
     parser.add_argument(
