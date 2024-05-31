@@ -12,7 +12,7 @@ def parser():
     parser = argparse.ArgumentParser(
         prog="PEAR",
         description=f"PEAR-EBI v{pear_ebi.__version__} | \
-        Phylogeny Embedding and Approximate Representation \n \
+        Phylogeny Embedding and Approximate Representation /n \
         Calculates Robinson-Foulds distances between large set of trees",
         epilog="Author: Andrea Rubbi - Goldman Group | European Bioinformatics Institute",
     )
@@ -29,7 +29,7 @@ def parser():
         type=str,
         dest="input",
         metavar="input",
-        help="input file : tree set in Newick format",
+        help="input file : one or more tree sets in Newick format",
         nargs="*",  # "?",
     )
     parser.add_argument(
@@ -41,8 +41,8 @@ def parser():
         required=False,
     )
     parser.add_argument(
-        "--interactive",
         "-i",
+        "--interactive",
         dest="interactive_mode",
         help="run the program in interactive mode - only the input file, distance matrix, output file, and metadata arguments will be considered",
         required=False,
@@ -77,14 +77,14 @@ def parser():
         "--pcoa",
         dest="pcoa",
         type=int,
-        help="embedding using PCoA: select number of components (int) to be calculated",
+        help="embedding using PCoA: specify number of components (int) to be calculated",
         required=False,
     )
     parser.add_argument(
         "--tsne",
         dest="tsne",
         type=int,
-        help="embedding using t-SNE: select number of components (int) to be calculated",
+        help="embedding using t-SNE: specify number of components (int) to be calculated",
         required=False,
     )
     parser.add_argument(
@@ -121,8 +121,8 @@ def parser():
         required=False,
     )"""
     parser.add_argument(
-        "--quality",
         "-q",
+        "--quality",
         action="store_true",
         dest="quality",
         help="asess quality of embedding",
