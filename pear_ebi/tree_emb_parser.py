@@ -12,8 +12,7 @@ def parser():
     parser = argparse.ArgumentParser(
         prog="PEAR",
         description=f"PEAR-EBI v{pear_ebi.__version__} | \
-        Phylogeny Embedding and Approximate Representation /n \
-        Calculates Robinson-Foulds distances between large set of trees",
+        Phylogeny Embedding and Approximate Representation",
         epilog="Author: Andrea Rubbi - Goldman Group | European Bioinformatics Institute",
     )
 
