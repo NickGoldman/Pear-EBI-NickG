@@ -88,8 +88,8 @@ def parser():
         required=False,
     )
     parser.add_argument(
-        "--plot",
         "-p",
+        "--plot",
         dest="plot",
         action="store_true",
         help="plot embedding in 2 or 3 dimensions",
@@ -105,8 +105,8 @@ def parser():
         required=False,
     )"""
     parser.add_argument(
-        "--config",
         "-c",
+        "--config",
         dest="config",
         type=str,
         help="toml config file",
@@ -125,7 +125,7 @@ def parser():
         "--quality",
         action="store_true",
         dest="quality",
-        help="asess quality of embedding",
+        help="assess quality of embedding",
         required=False,
     )
     parser.add_argument(
