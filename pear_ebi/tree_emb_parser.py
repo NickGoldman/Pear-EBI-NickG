@@ -13,7 +13,7 @@ def parser():
         prog="PEAR",
         description=f"PEAR-EBI v{pear_ebi.__version__} | \
         Phylogeny Embedding and Approximate Representation",
-        epilog="Author: Andrea Rubbi - Goldman Group | European Bioinformatics Institute",
+        epilog="Author: Andrea Rubbi & others - Goldman Group | European Bioinformatics Institute",
     )
 
     """parser.add_argument(
