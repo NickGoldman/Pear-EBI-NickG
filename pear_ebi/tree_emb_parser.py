@@ -75,15 +75,17 @@ def parser():
     parser.add_argument(
         "--pcoa",
         dest="pcoa",
+        metavar="N",
         type=int,
-        help="embedding using PCoA: specify number of components (int) to be calculated",
+        help="embedding using PCoA: specify number of coordinate dimensions N (int) to be calculated",
         required=False,
     )
     parser.add_argument(
         "--tsne",
         dest="tsne",
+        metavar="N",
         type=int,
-        help="embedding using t-SNE: specify number of components (int) to be calculated",
+        help="embedding using t-SNE: specify number of coordinate dimensions N (int) to be calculated",
         required=False,
     )
     parser.add_argument(
