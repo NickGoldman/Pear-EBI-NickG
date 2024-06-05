@@ -1,4 +1,4 @@
-_
+
  <h1> Phylogeny Embedding  & <br>  Approximate Representation </h1>
  <img src="https://github.com/AndreaRubbi/Pear-EBI/raw/pear_ebi/logos/LOGO_PEAR.png" width="100" height="100" style='position:absolute; left:400px; top:-15px' >
 
